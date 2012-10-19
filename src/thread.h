@@ -1,10 +1,6 @@
-/* -*- Mode: C; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
-#ifndef DSMP_H
-#define DSMP_H
+#ifndef _THREAD_H
+#define _THREAD_H
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -13,8 +9,7 @@
 #include <event.h>
 #include <netdb.h>
 #include <unistd.h>
-#include "pkg.h"
-#include "db.h"
+#include "my_struct.h"
 
 #define DATA_BUFFER_SIZE 2048
 #define UDP_READ_BUFFER_SIZE 65536

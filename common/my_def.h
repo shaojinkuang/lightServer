@@ -1,5 +1,5 @@
-#ifndef _DSMP_MACRO_H
-#define _DSMP_MACRO_H
+#ifndef _MY_DEF_H
+#define _MY_DEF_H
 
 //数据类型定义 old
 typedef short int sint;

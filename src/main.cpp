@@ -1,5 +1,6 @@
 /* -*- Mode: C; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
-//#include "dsmp.h"
+
+
 #include "service.h"
 #include <sys/stat.h>
 #include <sys/socket.h>
@@ -7,7 +8,8 @@
 #include <signal.h>
 #include <sys/resource.h>
 #include <sys/uio.h>
-#include <config.h>
+
+#include "Config.h"
 #include "logger.h"
 
 /* some POSIX systems need the following definition
@@ -1875,7 +1877,7 @@ static int get_valid_str(char *strSpace)
 
 static int get_cfg(const char * strDomainName,  const char * strFieldName, char * strFieldResult, int nLen)
 {
-   return config::instance()->ReadField(strDomainName,strFieldName,nLen,strFieldResult);
+   return Config::instance()->ReadField(strDomainName,strFieldName,nLen,strFieldResult);
 }
 
 static int read_cfg()
@@ -1906,9 +1908,9 @@ static int read_cfg()
         return -1;
     }
 
-    if (config::instance()->Load(sCfgFile) != 0)
+    if (Config::instance()->Load(sCfgFile) != 0)
 	{
-	   printf("load config failed!");
+	   printf("load Config failed!");
 	   return -1;
 	}
 	
@@ -2400,7 +2402,7 @@ int main (int argc, char **argv) {
     /* read cfg*/
 	if ( 0 != read_cfg() )
 	{
-	    fprintf(stderr, "failed to read config file\n");
+	    fprintf(stderr, "failed to read Config file\n");
 	    return 1;
 	}
 

@@ -1,14 +1,13 @@
-#Wed Oct 17 19:24:29 CST 2012
+#Sat Oct 20 00:52:38 CST 2012
 eclipse.preferences.version=1
 encoding//cfg/dsmp.cfg=gbk
-encoding//include/macro.h=UTF-8
-encoding//include/pkg.h=UTF-8
-encoding//include/service.h=UTF-8
-encoding//include/socket.h=UTF-8
-encoding//src/service.c=gbk
-encoding//src/socket.cpp=gbk
+encoding//common/Config.cpp=gbk
+encoding//common/my_def.h=UTF-8
+encoding//common/my_struct.h=UTF-8
+encoding//src/service.cpp=gbk
+encoding//src/service.h=gbk
 encoding//watch/watch.c=gbk
 encoding/<project>=UTF-8
-encoding/include=gbk
+encoding/common=gbk
 encoding/tools=gbk
 encoding/watch=gbk

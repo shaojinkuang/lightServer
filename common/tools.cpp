@@ -6,7 +6,7 @@
  */
 
 #include "tools.h"
-#include "pkg.h"
+#include "my_struct.h"
 #include "logger.h"
 
 #include <openssl/md5.h>

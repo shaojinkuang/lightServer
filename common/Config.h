@@ -1,5 +1,5 @@
-#ifndef _CONFIG_BASE_H_
-#define _CONFIG_BASE_H_
+#ifndef _CONFIG_H
+#define _CONFIG_H
 
 #include <stdio.h>
 #include <algorithm>
@@ -26,12 +26,13 @@ typedef list <st_FieldData> ConfigFieldlist;
 typedef map  <string, ConfigFieldlist > ConfigDominMap;
 
 //读取配置文件类
-class config
+class Config
 {
 public:
-	static config * instance();
-    config(void);
-    ~config(void);
+    Config(void);
+    ~Config(void);
+
+    static Config * instance();
 
     //传入配置文件名称路径，加载配置项到内存
     int Load(const char *pPath);
@@ -53,8 +54,8 @@ public:
 	int ReadDomin(const char *strDomainName,const char * strFieldName,ConfigFieldlist &listVal);
 
 private:
-    config(const config &);
-    config &operator=(const config &);
+    Config(const Config &);
+    Config &operator=(const Config &);
 
 private:
     char *m_pPath;

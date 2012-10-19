@@ -1,13 +1,12 @@
 #ccache,fast C/C++ compiler cache,  if ccache installed, .bash_profile shuld add "export CCACHE=ccache"
 GXX = $(CCACHE) g++
 CC = $(CCACHE) gcc
-EVENT_HOME = ${HOME}/libevent
 
-CCFLAGS = -g -D__LINUX__ -I${EVENT_HOME}/include -I../include/ \
-          -I./include
-LIB = -L${EVENT_HOME}/lib \
-	-levent -lpthread -lcrypt \
-	-luuid -lrt -lcrypto -lmemcached
+CCFLAGS = -g -I../common/ \
+          
+LIB = -levent -lpthread -lcrypto \
+	-L../common -lCommon
+	
 SOURCE := $(wildcard *.c)
 OBJECT := $(subst .c,.o,${SOURCE})
 SRC := $(wildcard *.cpp)

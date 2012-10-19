@@ -1,23 +1,23 @@
-#include "config.h"
+#include "Config.h"
 #include <string.h>
 #include <strings.h>
 
 #define MAX_BUF 1024
 
-config * config:: instance()
+Config * Config:: instance()
 {
-    static config inst;
+    static Config inst;
     return &inst;
 }
 
-config::config(void)
+Config::Config(void)
 {
     m_pPath = NULL;
 
     pthread_mutex_init(&this->m_lstMutex, NULL);
 }
 
-config::~config(void)
+Config::~Config(void)
 {
     if (m_pPath)
     {
@@ -27,7 +27,7 @@ config::~config(void)
     pthread_mutex_destroy(&this->m_lstMutex);
 }
 
-int config::Load(const char *pPath)
+int Config::Load(const char *pPath)
 {
     char szBuf[MAX_BUF] = {0};
     FILE *fp;
@@ -175,13 +175,13 @@ int config::Load(const char *pPath)
     return 0;
 }
 
-int config::Reload(void)
+int Config::Reload(void)
 {
     return this->Load(m_pPath);
 }
 
 //获取某个配置项子项目的值
-int config::ReadField(const char *strDomainName,const char * strFieldName, string &strValue)
+int Config::ReadField(const char *strDomainName,const char * strFieldName, string &strValue)
 {
 	if (strDomainName == NULL || strFieldName == NULL)
 	{
@@ -222,7 +222,7 @@ int config::ReadField(const char *strDomainName,const char * strFieldName, strin
     return 0;
 }
 
-int config::ReadField(const char *strDomainName,const char * strFieldName,int nlen,char sValue[])
+int Config::ReadField(const char *strDomainName,const char * strFieldName,int nlen,char sValue[])
 {
     if (strDomainName == NULL || strFieldName == NULL)
 	{
@@ -264,7 +264,7 @@ int config::ReadField(const char *strDomainName,const char * strFieldName,int nl
     return 0; 
 }
 //获取某个配置项内容（一般是主配置项内容）
-int config::ReadDomin(const char *strDomainName,ConfigFieldlist &listVal)
+int Config::ReadDomin(const char *strDomainName,ConfigFieldlist &listVal)
 {
 	listVal.clear();
 
@@ -288,7 +288,7 @@ int config::ReadDomin(const char *strDomainName,ConfigFieldlist &listVal)
 }
 
 
-int config::ReadDomin(const char *strDomainName,const char * strFieldName,ConfigFieldlist &listVal)
+int Config::ReadDomin(const char *strDomainName,const char * strFieldName,ConfigFieldlist &listVal)
 {
     if (strDomainName == NULL || strFieldName == NULL)
 	{

@@ -1,19 +1,19 @@
-/* -*- Mode: C; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
-#include "dsmp.h"
-//#include "db.h"
+
+
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include "thread.h"
 
-#ifdef HAVE_MALLOC_H
+//#ifdef HAVE_MALLOC_H
 #include <malloc.h>
-#endif
+//#endif
 
-#ifdef HAVE_STRING_H
+//#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
+//#endif
 
 #include <pthread.h>
 

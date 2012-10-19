@@ -1,3 +1,6 @@
+#ifndef _LOGGER_H
+#define _LOGGER_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -12,8 +15,8 @@
 #include <fcntl.h>
 #include <pthread.h>
 
-#ifndef _LOGGER_H
-#define _LOGGER_H
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -48,6 +51,9 @@ typedef struct _LOGGER
 	void (*printf)(struct _LOGGER *, char *format, ...);
 	void* (*check)(void *);
 }LOGGER;
+
+extern LOGGER* dsmplog;
+
 /* Initialize LOGGER */
 LOGGER *logger_init(char *logfile, int size, int hour, int check, int level);
 #endif

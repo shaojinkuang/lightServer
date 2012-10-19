@@ -1,8 +1,8 @@
-#ifndef _DSMP_PKG_H
-#define _DSMP_PKG_H
+#ifndef _MY_STRUCT_H
+#define _MY_STRUCT_H
+
 #include <sys/types.h>
-#include "macro.h"
-#include "logger.h" 
+#include "my_def.h"
 
 /* unistd.h is here */
 #if HAVE_UNISTD_H
@@ -115,7 +115,6 @@ struct settings {
 };
 
 extern struct settings settings;
-extern LOGGER* dsmplog;
 
 //文件配置
 typedef struct _st_cfg

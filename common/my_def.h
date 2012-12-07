@@ -65,7 +65,7 @@ typedef unsigned long       ULONG;
 #define Len4LimitDomain                 200
 
 
-// Define message type            
+// Define message type
 #define MACQueryPresent                 1001    //套餐信息查询
 #define MACQueryInfo                    1002    //业务信息查询
 #define MACQueryPacket                  1003    //套餐基本信息查询
@@ -107,7 +107,7 @@ typedef unsigned long       ULONG;
 #define MACQueryNetdisk                 2016    //查询套餐的网盘容量
 
 
-// Define 
+// Define
 typedef enum _tagenuBool
 {
     True    = 1,
@@ -123,7 +123,7 @@ typedef enuBool Bool;
 #define MEMSMSCONTENTKEY                "smp_sms_content_mem"
 #define MEMIPLIMIT                      "smp_ip_limit_mem"
 #define SMSCONTENTID                    "sid"
-#define MAXMEMSIZE                      2000 
+#define MAXMEMSIZE                      2000
 #define MAXWORKROW                      5000
 
 

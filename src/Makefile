@@ -2,10 +2,14 @@
 GXX = $(CCACHE) g++
 CC = $(CCACHE) gcc
 
+OPT_DIR=$(HOME)/opt/
+
 CCFLAGS = -g -I../common/ \
+	-I$(OPT_DIR)/include/
           
-LIB = -levent -lpthread -lcrypto \
-	-L../common -lCommon
+LIB = -lpthread -lcrypto \
+	-L../common -lCommon \
+	$(OPT_DIR)/lib/libevent.a -lrt
 	
 SOURCE := $(wildcard *.c)
 OBJECT := $(subst .c,.o,${SOURCE})

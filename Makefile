@@ -1,5 +1,5 @@
  
-INSTALL_DIR=~/run/lightServer
+INSTALL_DIR=~/run/lightServer/bin
 
 all:
 	@cd ./common; make
@@ -11,5 +11,5 @@ clean:
 
 install:
 	make
-	cp ./src/dsmp $(INSTALL_DIR)
+	cp ./src/lightSvr $(INSTALL_DIR)
 	

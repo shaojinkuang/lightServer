@@ -57,4 +57,5 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="lightServer.null.1547688273" name="lightServer"/>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

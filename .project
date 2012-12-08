@@ -3,9 +3,7 @@
 	<name>umsServ</name>
 	<comment></comment>
 	<projects>
-		<project>activemq-cpp-3.0.1</project>
-		<project>libevent-2.0.16-stable</project>
-		<project>orapp-2.0.3</project>
+		<project>libevent-1.4.12-stable</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

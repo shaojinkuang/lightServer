@@ -9,6 +9,14 @@
 #ifndef SERVER_H_
 #define SERVER_H_
 
+/*
+ * Free list management for connections.
+ */
+extern conn **freeconns;
+extern int freetotal;
+extern int freecurr;
+
+
 static void drive_machine(conn *c);
 static int new_socket(struct addrinfo *ai);
 static int server_socket(const int port, const bool is_udp);

@@ -7,6 +7,15 @@
 
 #include "server.h"
 
+
+/*
+ * Free list management for connections.
+ */
+
+static conn **freeconns;
+static int freetotal;
+static int freecurr;
+
 static void drive_machine(conn *c) {
 	bool stop = false;
 	int sfd, flags = 1;

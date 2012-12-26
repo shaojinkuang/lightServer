@@ -373,3 +373,16 @@ void thread_init(int nthreads, struct event_base *main_base)
 	pthread_mutex_unlock(&init_lock);
 }
 
+/*
+ * Pulls a conn structure from the freelist, if one is available.
+ */
+conn *mt_conn_from_freelist() {
+    conn *c;
+
+    pthread_mutex_lock(&conn_lock);
+    c = do_conn_from_freelist();
+    pthread_mutex_unlock(&conn_lock);
+
+    return c;
+}
+

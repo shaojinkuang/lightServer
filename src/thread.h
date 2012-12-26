@@ -20,6 +20,15 @@
 #define IOV_LIST_HIGHWAT 600
 #define MSG_LIST_HIGHWAT 100
 
+/** Initial size of list of CAS suffixes appended to "gets" lines. */
+#define SUFFIX_LIST_INITIAL 20
+
+/** Initial size of the sendmsg() scatter/gather array. */
+#define IOV_LIST_INITIAL 400
+
+/** Initial number of sendmsg() argument structures to allocate. */
+#define MSG_LIST_INITIAL 10
+
 
 
 /** Time relative to server start. Smaller than time_t on 64-bit systems. */
@@ -115,5 +124,8 @@ conn *conn_new(const int sfd, const int init_state, const int event_flags, const
 void thread_init(int nthreads, struct event_base *main_base);
 int  dispatch_event_add(int thread, conn *c);
 void dispatch_conn_new(int sfd, int init_state, int event_flags, int read_buffer_size, int is_udp);
+
+conn *mt_conn_from_freelist(void);
+# define conn_from_freelist()        mt_conn_from_freelist()
 
 #endif

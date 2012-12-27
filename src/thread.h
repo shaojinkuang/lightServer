@@ -13,6 +13,7 @@
 
 #define DATA_BUFFER_SIZE 2048
 #define MAX_SENDBUF_SIZE (256 * 1024 * 1024)
+#define UDP_READ_BUFFER_SIZE 65536
 
 /** High water marks for buffer shrinking */
 #define READ_BUFFER_HIGHWAT 8192
@@ -111,6 +112,13 @@ struct conn {
     struct timeval timestamp;
 };
 
+typedef struct token_s {
+    char *value;
+    size_t length;
+} token_t;
+
+#define MAX_TOKENS 8
+
 /* number of virtual buckets for a managed instance */
 #define MAX_BUCKETS 32768
 
@@ -126,6 +134,13 @@ int  dispatch_event_add(int thread, conn *c);
 void dispatch_conn_new(int sfd, int init_state, int event_flags, int read_buffer_size, int is_udp);
 
 conn *mt_conn_from_freelist(void);
+bool  mt_conn_add_to_freelist(conn *c);
+bool  mt_suffix_add_to_freelist(char *s);
+int   mt_is_listen_thread(void);
+bool do_suffix_add_to_freelist(char *s);
+# define suffix_add_to_freelist(x)   mt_suffix_add_to_freelist(x)
+# define is_listen_thread()          mt_is_listen_thread()
 # define conn_from_freelist()        mt_conn_from_freelist()
+# define conn_add_to_freelist(x)     mt_conn_add_to_freelist(x)
 
 #endif

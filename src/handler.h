@@ -10,10 +10,8 @@
 
 #include "thread.h"
 
-static void event_handler(const int fd, const short which, void *arg);
-static bool update_event(conn *c, const int new_flags);
-static int add_iov(conn *c, const void *buf, int len);
-static int add_msghdr(conn *c);
+void event_handler(const int fd, const short which, void *arg);
+bool update_event(conn *c, const int new_flags);
 
 
 #endif /* HANDLER_H_ */

@@ -7,8 +7,19 @@
 #include <malloc.h>
 #include <string.h>
 #include <pthread.h>
+#include "server.h"
 
 #define ITEMS_PER_ALLOC 64
+
+/* Lock for connection freelist */
+static pthread_mutex_t conn_lock;
+
+/* Lock for alternative item suffix freelist */
+static pthread_mutex_t suffix_lock;
+
+static char **freesuffix;
+static int freesuffixtotal;
+static int freesuffixcurr;
 
 /* An item in the connection queue. */
 typedef struct conn_queue_item CQ_ITEM;
@@ -265,12 +276,12 @@ static void thread_libevent_process(int fd, short which, void *arg)
 			{
 				fprintf(stderr, "Can't listen for events on UDP socket\n");
 				exit(1);
-			} else
+			}
+			else
 			{
 				if (settings.verbose > 0)
 				{
-					fprintf(stderr, "Can't listen for events on fd %d\n",
-							item->sfd);
+					fprintf(stderr, "Can't listen for events on fd %d\n", item->sfd);
 				}
 				close(item->sfd);
 			}
@@ -327,6 +338,8 @@ void thread_init(int nthreads, struct event_base *main_base)
 
 	pthread_mutex_init(&init_lock, NULL);
 	pthread_cond_init(&init_cond, NULL);
+	pthread_mutex_init(&conn_lock, NULL);
+	pthread_mutex_init(&suffix_lock, NULL);
 
 	pthread_mutex_init(&cqi_freelist_lock, NULL);
 	cqi_freelist = NULL;
@@ -376,13 +389,87 @@ void thread_init(int nthreads, struct event_base *main_base)
 /*
  * Pulls a conn structure from the freelist, if one is available.
  */
-conn *mt_conn_from_freelist() {
-    conn *c;
+conn *mt_conn_from_freelist()
+{
+	conn *c;
 
-    pthread_mutex_lock(&conn_lock);
-    c = do_conn_from_freelist();
-    pthread_mutex_unlock(&conn_lock);
+	pthread_mutex_lock(&conn_lock);
+	c = do_conn_from_freelist();
+	pthread_mutex_unlock(&conn_lock);
 
-    return c;
+	return c;
 }
 
+bool mt_conn_add_to_freelist(conn *c)
+{
+	bool result;
+
+	pthread_mutex_lock(&conn_lock);
+	result = do_conn_add_to_freelist(c);
+	pthread_mutex_unlock(&conn_lock);
+
+	return result;
+}
+
+/*
+ * Adds a suffix buffer to the freelist.
+ *
+ * Returns 0 on success, 1 if the buffer couldn't be added.
+ */
+bool mt_suffix_add_to_freelist(char *s)
+{
+	bool result;
+
+	pthread_mutex_lock(&suffix_lock);
+	result = do_suffix_add_to_freelist(s);
+	pthread_mutex_unlock(&suffix_lock);
+
+	return result;
+}
+
+/*
+ * Returns true if this is the thread that listens for new TCP connections.
+ */
+int mt_is_listen_thread()
+{
+	return pthread_self() == threads[0].thread_id;
+}
+
+/*
+ * Adds a connection to the freelist. 0 = success. Should call this using
+ * conn_add_to_freelist() for thread safety.
+ */
+bool do_suffix_add_to_freelist(char *s)
+{
+	if (freesuffixcurr < freesuffixtotal)
+	{
+		freesuffix[freesuffixcurr++] = s;
+		return false;
+	}
+	else
+	{
+		/* try to enlarge free connections array */
+		char **new_freesuffix = (char**) realloc(freesuffix, freesuffixtotal * 2);
+		if (new_freesuffix)
+		{
+			freesuffixtotal *= 2;
+			freesuffix = new_freesuffix;
+			freesuffix[freesuffixcurr++] = s;
+			return false;
+		}
+	}
+	return true;
+}
+
+static void suffix_init(void)
+{
+	freesuffixtotal = 500;
+	freesuffixcurr = 0;
+
+	freesuffix = (char **) malloc(sizeof(char *) * freesuffixtotal);
+	if (freesuffix == NULL)
+	{
+		fprintf(stderr, "malloc()\n");
+	}
+	return;
+}

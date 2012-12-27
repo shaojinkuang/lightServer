@@ -13,6 +13,7 @@
 //#include "server.h"
 #include "Config.h"
 #include "logger.h"
+#include "server.h"
 
 struct settings settings;
 LOGGER* dsmplog;
@@ -37,8 +38,7 @@ static void settings_init(void) {
 
 }
 
-//static conn *listen_conn = NULL;
-static struct event_base *main_base;		//主线程中 event_base 的实例指针
+
 
 static void sig_handler(const int sig) {
     printf("SIGINT handled.\n");
